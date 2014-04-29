@@ -8,8 +8,8 @@ module Pure360
       @double_opt_in         = params.fetch(:double_opt_in, false)
     end
 
-    def subscribe(subsriber)
-      Net::HTTP.post_form(@endpoint, subsriber)
+    def subscribe(subscriber)
+      Net::HTTP.post_form(@endpoint, subscriber.fetch(:email))
     end
   end
 end
