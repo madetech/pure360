@@ -32,4 +32,16 @@ describe Pure360 do
     p360.instance_variable_get(:@full_email_validation).should eq(params[:full_email_validation])
     p360.instance_variable_get(:@double_opt_in).should eq( params[:double_opt_in])
   end
+
+  it 'sends a subscribe request to the endpoint' do
+    subscriber_params = { :email => 'test@test.com' }
+
+    p360 = Pure360::Client.new(params)
+    parsed_endpoint = URI.parse(params[:endpoint])
+
+    Net::HTTP = double().as_null_object
+    Net::HTTP.should_receive(:post_form).with(parsed_endpoint, subscriber_params)
+
+    p360.subscribe(subscriber_params)
+  end
 end

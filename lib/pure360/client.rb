@@ -7,5 +7,9 @@ module Pure360
       @full_email_validation = params.fetch(:full_email_validation, false)
       @double_opt_in         = params.fetch(:double_opt_in, false)
     end
+
+    def subscribe(subsriber)
+      Net::HTTP.post_form(@endpoint, subsriber)
+    end
   end
 end
