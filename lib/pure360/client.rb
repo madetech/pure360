@@ -1,7 +1,7 @@
 module Pure360
   class Client
     def initialize(params)
-      @endpoint              = params.fetch(:endpoint)
+      @endpoint              = URI.parse(params.fetch(:endpoint))
       @list                  = params.fetch(:list)
       @account               = params.fetch(:account)
       @full_email_validation = params.fetch(:full_email_validation, false)
