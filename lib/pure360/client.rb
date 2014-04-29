@@ -9,7 +9,17 @@ module Pure360
     end
 
     def subscribe(subscriber)
-      Net::HTTP.post_form(@endpoint, subscriber.fetch(:email))
+      email = subscriber.fetch(:email)
+      raise "Invalid Email" unless valid_email?(email)
+
+      Net::HTTP.post_form(@endpoint, email)
+    end
+
+    private
+    def valid_email?(email)
+      return false if email.empty? or email.nil?
+
+      true
     end
   end
 end
