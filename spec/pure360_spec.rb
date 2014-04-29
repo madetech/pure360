@@ -1,15 +1,13 @@
 require 'spec_helper'
 
 describe Pure360 do
-  let(:params) {
-    {
-      endpoint:              "https://news.test.com/lists",
+  let(:params) do
+    { endpoint:              "https://news.test.com/lists",
       list:                  "ActiveData_2014-04-14",
       account:               "Client",
       full_email_validation: false,
-      double_opt_in:         false
-    }
-  }
+      double_opt_in:         false }
+  end
 
   context "#new" do
     it 'Parses an HTTPS endpoint' do
