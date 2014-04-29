@@ -3,8 +3,7 @@
 [![Build Status](https://travis-ci.org/madebymade/pure360.svg?branch=master)](https://travis-ci.org/madebymade/pure360)
 [![GitHub version](https://badge.fury.io/gh/madebymade%2Fpure360.svg)](http://badge.fury.io/gh/madebymade%2Fpure360)
 
-A wrapper for posting data to a specified endpoint using Net::HTTP.
-Currently tailored for posting subscriber data to the Pure360 email marketing platform.
+A wrapper tailored for posting data to the Pure360 email marketing platform.
 
 ## Installation
 
@@ -24,17 +23,35 @@ Or install it yourself as:
 
 Instantiate a new Pure360 object.
 
-    p360 = Pure360.new(:endpoint => 'https://my-website.com/interface/list.php',
-      :account => 'YourAccount',
-      :list => 'ActiveData_2014-04-14',
-      :full_email_validation => false,
-      :double_optin => false)
+```ruby
+params = {
+  endpoint: 'https://custom-pure360-url/interface/list.php',
+  account:  'YourAccount',
+  list:     'ActiveData_2014-04-14' }
+
+p360 = Pure360.new(params)
+```
 
 Some optional parameters can be passed in:
-      full_email_validation: true
-      double_optin:          true
+```ruby
+  full_email_validation: true
+  double_optin:          true
+```
 
 These will default to false if not specified.
+
+```ruby
+subscription_params = {
+ email: "test@test.com"
+}
+
+p360.subscribe(subscription_params)
+```
+
+Once instantiated, you can use the subscribe method.
+
+You can specify as many parameters as you need in the subscription_params, and they will all be posted to the endpoint.
+The 'email' hash entry is required.
 
 ## Contributing
 
