@@ -29,7 +29,7 @@ params = {
   account:  'YourAccount',
   list:     'ActiveData_2014-04-14' }
 
-p360 = Pure360.new(params)
+p360 = Pure360::Client.new(params)
 ```
 
 Some optional parameters can be passed in:
