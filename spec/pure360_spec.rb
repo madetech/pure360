@@ -16,28 +16,21 @@ describe Pure360 do
       p360.instance_variable_get(:@endpoint).should be_kind_of(URI::HTTPS)
     end
 
-    it 'Parses an HTTP endpoint' do
-      params[:endpoint] = "http://test.com"
-      p360 = Pure360::Client.new(params)
-
-      p360.instance_variable_get(:@endpoint).should be_kind_of(URI::HTTP)
-    end
-
     it 'Creates a new object' do
       p360 = Pure360::Client.new(params)
 
       p360.instance_variable_get(:@list).should eq(params[:list])
       p360.instance_variable_get(:@account).should eq(params[:account])
       p360.instance_variable_get(:@full_email_validation).should eq(params[:full_email_validation])
-      p360.instance_variable_get(:@double_opt_in).should eq( params[:double_opt_in])
+      p360.instance_variable_get(:@double_opt_in).should eq(params[:double_opt_in])
     end
   end
 
   context "#subscribe" do
     context 'Successful subscribe' do
-      let(:subscriber_params) {
-        { :email => 'test@test.com' } }
-
+      let(:subscriber_params) do
+        { :email => 'test@test.com' }
+      end
       let(:p360) { Pure360::Client.new(params) }
       let(:parsed_endpoint) { URI.parse(params[:endpoint]) }
 
