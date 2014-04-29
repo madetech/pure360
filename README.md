@@ -3,7 +3,8 @@
 [![Build Status](https://travis-ci.org/madebymade/pure360.svg?branch=master)](https://travis-ci.org/madebymade/pure360)
 [![GitHub version](https://badge.fury.io/gh/madebymade%2Fpure360.svg)](http://badge.fury.io/gh/madebymade%2Fpure360)
 
-Subscribe to Pure360 email lists.  Specify an endpoint, and data to be posted to it.
+A wrapper for posting data to a specified endpoint using Net::HTTP.
+Currently tailored for posting subscriber data to the Pure360 email marketing platform.
 
 ## Installation
 

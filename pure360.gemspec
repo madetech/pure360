@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Pure360::VERSION
   spec.authors       = ["Emile"]
   spec.email         = ["emile.swarts123@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{A wrapper for posting data to a specified endpoint using Net::HTTP.  Currently tailored for posting subscribtion requests to the Pure360 email marketing platform.}
+  spec.summary       = %q{Send subscribers to pure360}
   spec.homepage      = ""
   spec.license       = "MIT"
 
