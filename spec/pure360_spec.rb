@@ -36,31 +36,35 @@ describe Pure360 do
   end
 
   context "#subscribe" do
-    it 'sends a subscribe request to the endpoint' do
-      subscriber_params = { :email => 'test@test.com' }
+    context 'Successful subscribe' do
+      it 'sends a subscribe request to the endpoint' do
+        subscriber_params = { :email => 'test@test.com' }
 
-      p360 = Pure360::Client.new(params)
-      parsed_endpoint = URI.parse(params[:endpoint])
+        p360 = Pure360::Client.new(params)
+        parsed_endpoint = URI.parse(params[:endpoint])
 
-      Net::HTTP = double().as_null_object
-      Net::HTTP.should_receive(:post_form).with(parsed_endpoint, [subscriber_params])
+        Net::HTTP = double().as_null_object
+        Net::HTTP.should_receive(:post_form).with(parsed_endpoint, [subscriber_params])
 
-      p360.subscribe(subscriber_params)
+        p360.subscribe(subscriber_params)
+      end
     end
 
-    it 'fails if an email is not present in the subscriber params' do
-      subscriber_params = {}
-      expect { Pure360::Client.new(params).subscribe(subscriber_params) }.to raise_error
-    end
+    context 'Unsuccessful subscribe' do
+      it 'fails if an email is not present in the subscriber params' do
+        subscriber_params = {}
+        expect { Pure360::Client.new(params).subscribe(subscriber_params) }.to raise_error
+      end
 
-    it 'fails if an email is present in the subscriber params but blank' do
-      subscriber_params = { email: "" }
-      expect { Pure360::Client.new(params).subscribe(subscriber_params) }.to raise_error
-    end
+      it 'fails if an email is present in the subscriber params but blank' do
+        subscriber_params = { email: "" }
+        expect { Pure360::Client.new(params).subscribe(subscriber_params) }.to raise_error
+      end
 
-    it 'fails if an email is present in the subscriber params but blank' do
-      subscriber_params = { email: nil }
-      expect { Pure360::Client.new(params).subscribe(subscriber_params) }.to raise_error
+      it 'fails if an email is present in the subscriber params but blank' do
+        subscriber_params = { email: nil }
+        expect { Pure360::Client.new(params).subscribe(subscriber_params) }.to raise_error
+      end
     end
   end
 end
