@@ -43,8 +43,11 @@ describe Pure360 do
       let(:p360) { Pure360::Client.new(params) }
       let(:parsed_endpoint) { URI.parse(params[:endpoint]) }
 
-      it 'sends a subscribe request to the endpoint' do
+      before do
         Net::HTTP = double().as_null_object
+      end
+
+      it 'sends a subscribe request to the endpoint' do
         Net::HTTP.should_receive(:post_form).with(parsed_endpoint, [subscriber_params])
 
         p360.subscribe(subscriber_params)
@@ -54,7 +57,6 @@ describe Pure360 do
         custom_value = { custom_value: "Some custom value" }
         subscriber_params.merge!(custom_value)
 
-        Net::HTTP = double().as_null_object
         Net::HTTP.should_receive(:post_form).with(parsed_endpoint, [subscriber_params])
 
         p360.subscribe(subscriber_params)
