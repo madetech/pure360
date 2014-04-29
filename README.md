@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/madebymade/pure360.svg?branch=master)](https://travis-ci.org/madebymade/pure360)
 
-TODO: Write a gem description
+Subscribe to Pure360 email lists.
 
 ## Installation
 
@@ -27,8 +27,6 @@ p360 = Pure360.new(:endpoint => 'https://my-website.com/interface/list.php',
   :list => 'ActiveData_2014-04-14',
   :full_email_validation => false,
   :double_optin => false)
-
-  Endpoint: Your 3
 
 ## Contributing
 
