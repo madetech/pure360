@@ -8,11 +8,12 @@ module Pure360
       @double_opt_in         = params.fetch(:double_opt_in, false)
     end
 
-    def subscribe(subscriber)
-      email = subscriber.fetch(:email)
+    def subscribe(subscriber_params)
+      email = subscriber_params.fetch(:email)
       raise "Invalid Email" unless valid_email?(email)
 
-      Net::HTTP.post_form(@endpoint, email)
+      post(subscriber_params)
+
     end
 
     private
@@ -20,6 +21,10 @@ module Pure360
       return false if email.empty? or email.nil?
 
       true
+    end
+
+    def post(*args)
+      Net::HTTP.post_form(@endpoint, args)
     end
   end
 end

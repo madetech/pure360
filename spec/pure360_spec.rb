@@ -43,33 +43,24 @@ describe Pure360 do
       parsed_endpoint = URI.parse(params[:endpoint])
 
       Net::HTTP = double().as_null_object
-      Net::HTTP.should_receive(:post_form).with(parsed_endpoint, subscriber_params[:email])
+      Net::HTTP.should_receive(:post_form).with(parsed_endpoint, [subscriber_params])
 
       p360.subscribe(subscriber_params)
     end
 
     it 'fails if an email is not present in the subscriber params' do
-      subscriber_params = { }
-
-      expect {
-        Pure360::Client.new(params).subscribe(subscriber_params)
-      }.to raise_error
+      subscriber_params = {}
+      expect { Pure360::Client.new(params).subscribe(subscriber_params) }.to raise_error
     end
 
     it 'fails if an email is present in the subscriber params but blank' do
-      subscriber_params = { :email => "" }
-
-      expect {
-        Pure360::Client.new(params).subscribe(subscriber_params)
-      }.to raise_error
+      subscriber_params = { email: "" }
+      expect { Pure360::Client.new(params).subscribe(subscriber_params) }.to raise_error
     end
 
     it 'fails if an email is present in the subscriber params but blank' do
-      subscriber_params = { :email => nil }
-
-      expect {
-        Pure360::Client.new(params).subscribe(subscriber_params)
-      }.to raise_error
+      subscriber_params = { email: nil }
+      expect { Pure360::Client.new(params).subscribe(subscriber_params) }.to raise_error
     end
   end
 end
