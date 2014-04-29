@@ -9,13 +9,13 @@ module Pure360
     end
 
     def subscribe(subscriber_params)
-      ensure_email(subscriber_params.fetch(:email))
+      ensure_email!(subscriber_params.fetch(:email))
 
       post(subscriber_params)
     end
 
     private
-    def ensure_email(email)
+    def ensure_email!(email)
       raise "Invalid Email" unless valid_email?(email)
     end
 
