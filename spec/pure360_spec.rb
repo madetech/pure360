@@ -37,10 +37,21 @@ describe Pure360 do
 
   context "#subscribe" do
     context 'Successful subscribe' do
-      it 'sends a subscribe request to the endpoint' do
-        subscriber_params = { :email => 'test@test.com' }
+      let(:subscriber_params) {
+        { :email => 'test@test.com' }
+      }
+      let(:p360) { Pure360::Client.new(params) }
 
-        p360 = Pure360::Client.new(params)
+      it 'sends a subscribe request to the endpoint' do
+        parsed_endpoint = URI.parse(params[:endpoint])
+
+        Net::HTTP = double().as_null_object
+        Net::HTTP.should_receive(:post_form).with(parsed_endpoint, [subscriber_params])
+
+        p360.subscribe(subscriber_params)
+      end
+
+      it 'sends any custom customer params specified to the endpoint' do
         parsed_endpoint = URI.parse(params[:endpoint])
 
         Net::HTTP = double().as_null_object
