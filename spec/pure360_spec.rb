@@ -63,5 +63,13 @@ describe Pure360 do
         Pure360::Client.new(params).subscribe(subscriber_params)
       }.to raise_error
     end
+
+    it 'fails if an email is present in the subscriber params but blank' do
+      subscriber_params = { :email => nil }
+
+      expect {
+        Pure360::Client.new(params).subscribe(subscriber_params)
+      }.to raise_error
+    end
   end
 end
