@@ -7,7 +7,8 @@ module Pure360
     def initialize(params)
       @params = {}
 
-      @endpoint                        = URI.parse(params.fetch(:endpoint))
+      @params[:endpoint]               = URI.parse(params.fetch(:endpoint))
+      @endpoint                        = @params[:endpoint]
       @params[:listName]               = params.fetch(:list)
       @params[:accName]                = params.fetch(:account)
       @params[:fullEmailValidationInd] = params.fetch(:full_email_validation, "N")
@@ -34,13 +35,13 @@ module Pure360
     end
 
     def post(*subscription_params)
-      req = Net::HTTP::Post.new(@endpoint.path)
+      req = Net::HTTP::Post.new(@params[:endpoint].path)
       req.set_form_data(payload(subscription_params))
-      endpoint.request(req)
+      http.request(req)
     end
 
-    def endpoint
-      https = Net::HTTP.new(@endpoint.host, @endpoint.port)
+    def http
+      https = Net::HTTP.new(@params[:endpoint].host, @params[:endpoint].port)
       https.use_ssl = true
       https.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
@@ -48,7 +49,7 @@ module Pure360
     end
 
     def payload(subscription_args)
-      @params.merge! subscription_args[0]
+      @params.merge(subscription_args[0])
     end
   end
 end

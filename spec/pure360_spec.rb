@@ -28,9 +28,11 @@ describe Pure360 do
 
   context "#subscribe" do
     context 'Successful subscribe' do
+
       let(:subscriber_params) do
         { :email => 'test@test.com' }
       end
+
       let(:p360) { Pure360::Client.new(params) }
       let(:parsed_endpoint) { URI.parse(params[:endpoint]) }
       let(:post) { double(:post).as_null_object }
@@ -39,14 +41,46 @@ describe Pure360 do
       before(:each) do
         Net::HTTP::Post.stub(:new).and_return post
         Net::HTTP.any_instance.stub(:request).and_return post_request
+        stub(:endpoint => double(:https).as_null_object)
       end
 
-      it 'sends any custom customer params specified to the endpoint' do
-        stub(:endpoint => double(:https).as_null_object)
+      context "Post configuration data in the payload" do
+        it 'List name' do
+          post.should_receive(:set_form_data).with(hash_including(:listName => params[:list]))
 
-        post.should_receive(:set_form_data).with(hash_including(subscriber_params))
+          p360.subscribe(subscriber_params)
+        end
 
-        p360.subscribe(subscriber_params)
+        it 'Account name' do
+          post.should_receive(:set_form_data).with(hash_including(:accName => params[:account]))
+
+          p360.subscribe(subscriber_params)
+        end
+
+        it 'Endpoint' do
+          post.should_receive(:set_form_data).with(hash_including(:endpoint))
+
+          p360.subscribe(subscriber_params)
+        end
+      end
+
+      context "Post subscriber data in the payload" do
+        it 'User email' do
+          post.should_receive(:set_form_data).with(hash_including(:email => subscriber_params[:email]))
+
+          p360.subscribe(subscriber_params)
+        end
+
+        it 'Any custom parameters' do
+          custom_params = { :xyz => "lorem" }
+
+          post.should_receive(:set_form_data).with(hash_including(custom_params))
+
+          subscriber_params.merge!(custom_params)
+
+          p360.subscribe(subscriber_params)
+        end
+
       end
     end
 
