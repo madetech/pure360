@@ -8,7 +8,6 @@ module Pure360
       @params = {}
 
       @params[:endpoint]               = URI.parse(params.fetch(:endpoint))
-      @endpoint                        = @params[:endpoint]
       @params[:listName]               = params.fetch(:list)
       @params[:accName]                = params.fetch(:account)
       @params[:fullEmailValidationInd] = params.fetch(:full_email_validation, "N")

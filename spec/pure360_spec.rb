@@ -13,7 +13,7 @@ describe Pure360 do
     it 'Parses an HTTPS endpoint' do
       p360 = Pure360::Client.new(params)
 
-      p360.instance_variable_get(:@endpoint).should be_kind_of(URI::HTTPS)
+      p360.instance_variable_get(:@params)[:endpoint].should be_kind_of(URI::HTTPS)
     end
 
     it 'Creates a new object' do
