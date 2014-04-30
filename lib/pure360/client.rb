@@ -1,3 +1,6 @@
+require 'uri'
+require 'net/http'
+
 module Pure360
   class Client
     def initialize(params)
