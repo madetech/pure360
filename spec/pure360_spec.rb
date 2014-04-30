@@ -33,15 +33,17 @@ describe Pure360 do
       end
       let(:p360) { Pure360::Client.new(params) }
       let(:parsed_endpoint) { URI.parse(params[:endpoint]) }
-      let(:http) { double(:http).as_null_object }
       let(:post) { double(:post).as_null_object }
+      let(:post_request) { double(:post_request).as_null_object }
 
       before(:each) do
-        Net::HTTP.stub(:start).and_yield http
         Net::HTTP::Post.stub(:new).and_return post
+        Net::HTTP.any_instance.stub(:request).and_return post_request
       end
 
       it 'sends any custom customer params specified to the endpoint' do
+        stub(:endpoint => double(:https).as_null_object)
+
         post.should_receive(:set_form_data).with(hash_including(subscriber_params))
 
         p360.subscribe(subscriber_params)

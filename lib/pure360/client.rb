@@ -17,7 +17,9 @@ module Pure360
     def subscribe(subscription_params)
       ensure_email!(subscription_params.fetch(:email))
 
-      post(subscription_params)
+      response = post(subscription_params)
+
+      response.body
     end
 
     private
@@ -32,13 +34,17 @@ module Pure360
     end
 
     def post(*subscription_params)
-      Net::HTTP.start(@endpoint.host, @endpoint.port) do |http|
-        http.use_ssl = true if @endpoint.scheme == 'https'
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        req = Net::HTTP::Post.new(@endpoint.path)
-        req.set_form_data(payload(subscription_params))
-        http.request(req)
-      end
+      req = Net::HTTP::Post.new(@endpoint.path)
+      req.set_form_data(payload(subscription_params))
+      endpoint.request(req)
+    end
+
+    def endpoint
+      https = Net::HTTP.new(@endpoint.host, @endpoint.port)
+      https.use_ssl = true
+      https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+      https
     end
 
     def payload(subscription_args)
