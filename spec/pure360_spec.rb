@@ -85,12 +85,12 @@ describe Pure360 do
     end
 
     context 'Unsuccessful subscribe' do
-      it 'fails if an email is not present in the subscriber params' do
+      it 'fails if an email is in the supplied parameters' do
         subscriber_params = {}
         expect { Pure360::Client.new(params).subscribe(subscriber_params) }.to raise_error
       end
 
-      it 'fails if an email is present in the subscriber params but blank' do
+      it 'fails if an email is blank' do
         subscriber_params = { email: "" }
         expect { Pure360::Client.new(params).subscribe(subscriber_params) }.to raise_error
       end

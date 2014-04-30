@@ -33,7 +33,7 @@ module Pure360
       true
     end
 
-    def post(*subscription_params)
+    def post(subscription_params)
       req = Net::HTTP::Post.new(@params[:endpoint].path)
       req.set_form_data(payload(subscription_params))
       http.request(req)
@@ -48,7 +48,7 @@ module Pure360
     end
 
     def payload(subscription_args)
-      @params.merge(subscription_args[0])
+      @params.merge subscription_args
     end
   end
 end
