@@ -5,8 +5,8 @@ describe Pure360 do
     { endpoint:              "https://news.test.com/lists",
       list:                  "ActiveData_2014-04-14",
       account:               "Client",
-      full_email_validation: false,
-      double_opt_in:         false }
+      full_email_validation: "false",
+      double_opt_in:         "false" }
   end
 
   context "#new" do
@@ -19,10 +19,10 @@ describe Pure360 do
     it 'Creates a new object' do
       p360 = Pure360::Client.new(params)
 
-      p360.instance_variable_get(:@list).should eq(params[:list])
-      p360.instance_variable_get(:@account).should eq(params[:account])
-      p360.instance_variable_get(:@full_email_validation).should eq(params[:full_email_validation])
-      p360.instance_variable_get(:@double_opt_in).should eq(params[:double_opt_in])
+      p360.instance_variable_get(:@params)[:listName].should eq(params[:list])
+      p360.instance_variable_get(:@params)[:accName].should eq(params[:account])
+      p360.instance_variable_get(:@params)[:fullEmailValidationInd].should eq(params[:full_email_validation])
+      p360.instance_variable_get(:@params)[:doubleOptin].should eq(params[:double_opt_in])
     end
   end
 
@@ -33,22 +33,16 @@ describe Pure360 do
       end
       let(:p360) { Pure360::Client.new(params) }
       let(:parsed_endpoint) { URI.parse(params[:endpoint]) }
+      let(:http) { double(:http).as_null_object }
+      let(:post) { double(:post).as_null_object }
 
-      before do
-        Net::HTTP = double().as_null_object
-      end
-
-      it 'sends a subscribe request to the endpoint' do
-        Net::HTTP.should_receive(:post_form).with(parsed_endpoint, [subscriber_params])
-
-        p360.subscribe(subscriber_params)
+      before(:each) do
+        Net::HTTP.stub(:start).and_yield http
+        Net::HTTP::Post.stub(:new).and_return post
       end
 
       it 'sends any custom customer params specified to the endpoint' do
-        custom_value = { custom_value: "Some custom value" }
-        subscriber_params.merge!(custom_value)
-
-        Net::HTTP.should_receive(:post_form).with(parsed_endpoint, [subscriber_params])
+        post.should_receive(:set_form_data).with(hash_including(subscriber_params))
 
         p360.subscribe(subscriber_params)
       end

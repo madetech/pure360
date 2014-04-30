@@ -1,20 +1,23 @@
 require 'uri'
 require 'net/http'
+require 'net/https'
 
 module Pure360
   class Client
     def initialize(params)
-      @endpoint              = URI.parse(params.fetch(:endpoint))
-      @list                  = params.fetch(:list)
-      @account               = params.fetch(:account)
-      @full_email_validation = params.fetch(:full_email_validation, false)
-      @double_opt_in         = params.fetch(:double_opt_in, false)
+      @params = {}
+
+      @endpoint                        = URI.parse(params.fetch(:endpoint))
+      @params[:listName]               = params.fetch(:list)
+      @params[:accName]                = params.fetch(:account)
+      @params[:fullEmailValidationInd] = params.fetch(:full_email_validation, "N")
+      @params[:doubleOptin]            = params.fetch(:double_opt_in, "false")
     end
 
-    def subscribe(subscriber_params)
-      ensure_email!(subscriber_params.fetch(:email))
+    def subscribe(subscription_params)
+      ensure_email!(subscription_params.fetch(:email))
 
-      post(subscriber_params)
+      post(subscription_params)
     end
 
     private
@@ -28,8 +31,18 @@ module Pure360
       true
     end
 
-    def post(*args)
-      Net::HTTP.post_form(@endpoint, args)
+    def post(*subscription_params)
+      Net::HTTP.start(@endpoint.host, @endpoint.port) do |http|
+        http.use_ssl = true if @endpoint.scheme == 'https'
+        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        req = Net::HTTP::Post.new(@endpoint.path)
+        req.set_form_data(payload(subscription_params))
+        http.request(req)
+      end
+    end
+
+    def payload(subscription_args)
+      @params.merge! subscription_args[0]
     end
   end
 end
