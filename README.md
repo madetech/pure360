@@ -27,7 +27,7 @@ Instantiate a new Pure360 object.
 params = {
   endpoint: 'https://custom-pure360-url/interface/list.php',
   account:  'YourAccount',
-  list:     'ActiveData_2014-04-14' }
+  list:     'Your-list-name' }
 
 p360 = Pure360::Client.new(params)
 ```
