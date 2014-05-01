@@ -41,7 +41,7 @@ describe Pure360 do
       before(:each) do
         Net::HTTP::Post.stub(:new).and_return post
         Net::HTTP.any_instance.stub(:request).and_return post_request
-        stub(:endpoint => double(:https).as_null_object)
+        double(:endpoint => double(:https).as_null_object)
       end
 
       context "Post configuration data in the payload" do
