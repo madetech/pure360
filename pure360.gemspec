@@ -7,11 +7,11 @@ Gem::Specification.new do |spec|
   spec.name          = "pure360"
   spec.version       = Pure360::VERSION
   spec.authors       = ["Emile"]
-  spec.email         = ["emile.swarts123@gmail.com"]
+  spec.email         = ["emile@madebymade.co.uk"]
   spec.description   = %q{Interact with the Pure360 email marketing platform}
   spec.summary       = %q{A wrapper tailored for interacting with the Pure360 email marketing platform}
   spec.homepage      = "https://github.com/madebymade/pure360"
-  spec.license       = "MIT"
+  spec.license       = "New BSD License"
 
   spec.files         = `git ls-files`.split($/)
   spec.files         = Dir['lib/**/*.rb']
