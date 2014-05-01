@@ -49,11 +49,16 @@ The 'email' hash entry however is required.
 p360.subscribe({ email: "test@test.com" })
 ```
 
+###Credits
 
-## Contributing
+Developed and maintained by [Made](http://www.madetech.co.uk?ref=github&repo=pure360).
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+[![made](https://s3-eu-west-1.amazonaws.com/made-assets/googleapps/google-apps.png)](http://www.madetech.co.uk?ref=github&repo=navobile)
+
+Key contributions:
+
+* [Emile Swarts](https://github.com/emileswarts)
+
+###License
+
+Licensed under [New BSD License](https://github.com/madebymade/pure360/blob/master/LICENSE.txt)
